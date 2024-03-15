@@ -57,12 +57,12 @@ func uploadS3(ctx context.Context, cfg aws.Config, file []byte, bucket string, k
 	return err
 }
 
-func (u *Uploader) Upload(ctx context.Context, file []byte, bucket string, key string) error {
+func (u *Uploader) Upload(ctx context.Context) error {
 	cfg, err := getConfig(ctx)
 	if err != nil {
 		log.Printf("unable to load AWS config, %v", err)
 	}
-	err = uploadS3(ctx, cfg, file, bucket, key)
+	err = uploadS3(ctx, cfg, u.File, u.Bucket, u.Key)
 	if err != nil {
 		log.Printf("unable to upload to S3, %v", err)
 	}
